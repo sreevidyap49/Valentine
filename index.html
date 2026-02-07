@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine 💘</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #d81b60;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 180px;
+    }
+
+    button {
+      width: 140px;
+      padding: 14px 0;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    #yesBtn {
+      background: #e91e63;
+      color: white;
+    }
+
+    #noBtn {
+      background: #9e9e9e;
+      color: white;
+      position: absolute;
+      left: 160px;
+      top: 0;
+    }
+
+    #loveMessage {
+      display: none;
+      font-size: 26px;
+      color: white;
+      margin-top: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    #shareBtn {
+      display: none;
+      margin-top: 20px;
+      background: #ffffff;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="question">Will you be my Valentine? 💖</h1>
+
+    <div class="buttons" id="btnBox">
+      <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 💔</button>
+    </div>
+
+    <div id="loveMessage">
+      Now you are my Valentine ❤️<br>
+      I LOVE YOU 💕
+    </div>
+
+    <button id="shareBtn">🔗 Send this link</button>
+
+    <!-- Romantic sound -->
+    <audio id="loveSound">
+      <source src="https://www.soundjay.com/human/kiss-01.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const btnBox = document.getElementById("btnBox");
+    const shareBtn = document.getElementById("shareBtn");
+    const loveSound = document.getElementById("loveSound");
+
+    function moveNoButton() {
+      const maxX = btnBox.clientWidth - noBtn.offsetWidth;
+      const maxY = btnBox.clientHeight - noBtn.offsetHeight;
+      noBtn.style.left = Math.random() * maxX + "px";
+      noBtn.style.top = Math.random() * maxY + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
+
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      document.getElementById("question").style.display = "none";
+      btnBox.style.display = "none";
+      document.getElementById("loveMessage").style.display = "block";
+      shareBtn.style.display = "inline-block";
+
+      // Play romantic sound
+      loveSound.play();
+    });
+
+    // Share link
+    shareBtn.addEventListener("click", () => {
+      const link = window.location.href;
+      const text = "💖 Will you be my Valentine? 💖\n" + link;
+
+      if (navigator.share) {
+        navigator.share({
+          title: "Be My Valentine 💘",
+          text: text,
+          url: link
+        });
+      } else {
+        navigator.clipboard.writeText(link);
+        alert("Link copied! 💕");
+      }
+    });
+  </script>
+
+</body>
+</html>
